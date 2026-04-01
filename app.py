@@ -1,4 +1,3 @@
-
 import streamlit as st
 import sqlite3
 import pandas as pd
@@ -15,7 +14,7 @@ payments contains payment transaction history.
 
 @st.cache_resource
 def load_database():
-    conn = sqlite3.connect(":memory:")
+    conn = sqlite3.connect(":memory:", check_same_thread=False)
     df = pd.read_csv("sql_bot_test.csv")
     df.columns = [c.strip().lower() for c in df.columns]
     df.to_sql("user_loan", conn, if_exists="replace", index=False)
@@ -46,10 +45,10 @@ SCHEMA CONTEXT:
 {SCHEMA_CONTEXT}
 
 RULES:
-- Return ONLY the SQL query, nothing else
-- No explanation, no markdown, no backticks
-- Use proper JOINs when needed
-- Use lower() to avoid case sensitivity
+Return ONLY the SQL query, nothing else
+No explanation, no markdown, no backticks
+Use proper JOINs when needed
+Use lower() to avoid case sensitivity
 
 QUESTION: {question}
 
